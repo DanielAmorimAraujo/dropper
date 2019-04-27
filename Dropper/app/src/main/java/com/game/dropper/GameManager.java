@@ -17,7 +17,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        thread = new MainThread(getHolder(), this);
 
+        thread.setRunning(true);
+        thread.start();
     }
 
     @Override
@@ -33,6 +36,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void draw(Canvas canvas){
-
+        super.draw(canvas);
     }
 }
