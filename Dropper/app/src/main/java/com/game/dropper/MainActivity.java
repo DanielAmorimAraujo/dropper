@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        //Constants.SCREEN_WIDTH = dm.widthPixels;
-        //Constants.SCREEN_HEIGHT = dm.heightPixels;
+        Constants.SCREEN_WIDTH = dm.widthPixels;
+        Constants.SCREEN_HEIGHT = dm.heightPixels;
 
-        //setContentView(new GameManager(this));
+        setContentView(new GameManager(this));
     }
 }
