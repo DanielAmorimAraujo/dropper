@@ -7,6 +7,11 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * GameManager class manages the game by generating the specific GameObjects and updating them
+ * appropriately
+ * Also generates the canvas in which the game is drawn on
+ */
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
@@ -49,6 +54,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * updates the specific GameObjects
+     */
     public void update() {
         if (floors.playerCollide(player)) {
             player.playerDrop(3);
@@ -58,7 +66,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         floors.update();
     }
 
-    public void draw(Canvas canvas){
+    /**
+     * draws the canvas and all necessary GameObjects
+     *
+     * @param canvas in which the game is drawn on
+     */
+    public void draw(Canvas canvas) {
         super.draw(canvas);
         canvas.drawColor(Color.WHITE);
 

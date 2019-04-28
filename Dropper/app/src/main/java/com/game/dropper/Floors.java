@@ -4,6 +4,9 @@ import android.graphics.Canvas;
 
 import java.util.ArrayList;
 
+/**
+ * Floors class used to generate all the SingleFloors
+ */
 public class Floors implements GameObject {
 
     private ArrayList<SingleFloor> floors;
@@ -26,6 +29,9 @@ public class Floors implements GameObject {
         addFloors();
     }
 
+    /**
+     * adds a couple of SingleFloors at the beginning as a buffer
+     */
     public void addFloors() {
         int gaps = (int) Math.floor(Math.random() * 2) + 1;
 
@@ -42,8 +48,14 @@ public class Floors implements GameObject {
         }
     }
 
+    /**
+     * determines if the player intersects with any of the floors
+     *
+     * @param player the current player
+     * @return if the player intersects
+     */
     public boolean playerCollide(Player player) {
-        for (SingleFloor fl: floors) {
+        for (SingleFloor fl : floors) {
             if (fl.playerCollideF(player)) {
                 return true;
             }
@@ -51,6 +63,9 @@ public class Floors implements GameObject {
         return false;
     }
 
+    /**
+     * moves the floors down, adding additional ones if necessary
+     */
     @Override
     public void update() {
         for (SingleFloor fl : floors) {
@@ -76,6 +91,11 @@ public class Floors implements GameObject {
         }
     }
 
+    /**
+     * draws all the SingleFloors onto the canvas
+     *
+     * @param canvas in which the game is drawn on
+     */
     @Override
     public void draw(Canvas canvas) {
         for (SingleFloor fl : floors) {

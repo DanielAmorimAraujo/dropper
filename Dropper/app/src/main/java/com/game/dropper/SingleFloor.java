@@ -4,6 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+/**
+ * SingleFloor class used to generate a single floor level
+ */
 public class SingleFloor implements GameObject {
 
     private Rect rect1;
@@ -24,10 +27,18 @@ public class SingleFloor implements GameObject {
         rect3 = new Rect(length1 + 2 * playerGap + length2, height, Constants.SCREEN_WIDTH, floorHeight + height);
     }
 
+    /**
+     * @return the bottom of the floor
+     */
     public int getHeight() {
         return rect1.bottom;
     }
 
+    /**
+     * moves the floor down y pixels
+     *
+     * @param y number of pixels the floor moves down
+     */
     public void floorMove(float y) {
         rect1.top -= y;
         rect1.bottom -= y;
@@ -37,6 +48,13 @@ public class SingleFloor implements GameObject {
         rect3.bottom -= y;
 
     }
+
+    /**
+     * determines if the player intersects with the floor
+     *
+     * @param player the current player
+     * @return if it intersects or not
+     */
     // it  can only intersect at the top, have it continue falling when it touches the size
     public boolean playerCollideF(Player player) {
         return Rect.intersects(rect1, player.getRect()) || Rect.intersects(rect2, player.getRect()) || Rect.intersects(rect3, player.getRect());
@@ -47,6 +65,11 @@ public class SingleFloor implements GameObject {
 
     }
 
+    /**
+     * draws the floor onto the canvas
+     *
+     * @param canvas in which the game is drawn on
+     */
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();

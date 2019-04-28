@@ -11,14 +11,16 @@ public class MainThread extends Thread {
     private boolean running;
     public static Canvas canvas;
 
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
+
     public MainThread(SurfaceHolder surfaceHolder, GameManager gameManager) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gameManager = gameManager;
 
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     @Override
