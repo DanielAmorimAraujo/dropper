@@ -24,6 +24,20 @@ public class SingleFloor implements GameObject {
         rect3 = new Rect(length1 + 2 * playerGap + length2, height, Constants.SCREEN_WIDTH, floorHeight + height);
     }
 
+    public int getHeight() {
+        return rect1.bottom;
+    }
+
+    public void floorMove(float y) {
+        rect1.top -= y;
+        rect1.bottom -= y;
+        rect2.top -= y;
+        rect2.bottom -= y;
+        rect3.top -= y;
+        rect3.bottom -= y;
+
+    }
+
     @Override
     public void update() {
 
