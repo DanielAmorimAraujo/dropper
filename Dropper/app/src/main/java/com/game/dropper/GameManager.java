@@ -18,6 +18,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
     private Player player;
     private Floors floors;
+    private Button rightButton;
+    private Button leftButton;
     private int movePoint;
     private boolean moveRight;
     private boolean moveLeft;
@@ -28,6 +30,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
         player = new Player(new Rect(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 30, 260), Color.BLUE);
         floors = new Floors(30, 150, 200, Color.BLACK);
+        rightButton = new Button(Constants.SCREEN_WIDTH / 6 * 5, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
+        leftButton = new Button(Constants.SCREEN_WIDTH / 6, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
 
         setFocusable(true);
     }
@@ -110,5 +114,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
         floors.draw(canvas);
         player.draw(canvas);
+        rightButton.draw(canvas);
+        leftButton.draw(canvas);
     }
 }
