@@ -19,6 +19,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private Player player;
     private Floors floors;
     private int movePoint;
+    private boolean moveRight;
+    private boolean moveLeft;
 
     public GameManager(Context context) {
         super(context);
@@ -64,13 +66,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
      */
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        if (MotionEvent.ACTION_DOWN == action || MotionEvent.ACTION_MOVE == action) {
+        if (MotionEvent.ACTION_DOWN == action) {
             movePoint = (int) event.getX();
             if (movePoint > player.getRect().right) {
-                player.playerSlide(5);
+                moveRight = true;
+                moveLeft = false;
             } else if (movePoint < player.getRect().left) {
-                player.playerSlide(-5);
+                moveLeft = true;
+                moveRight = false;
             }
+        } else if (MotionEvent.ACTION_UP == action) {
+            moveRight = false;
+            moveLeft = false;
         }
         return true;
     }
@@ -83,6 +90,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
             player.playerDrop(3);
         } else {
             player.playerDrop(-10);
+        }
+        if (moveRight) {
+            player.playerSlide(5);
+        } else if (moveLeft) {
+            player.playerSlide(-5);
         }
         floors.update();
     }
