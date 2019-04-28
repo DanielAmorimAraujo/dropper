@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -17,6 +18,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
     private Player player;
     private Floors floors;
+    private int movePoint;
 
     public GameManager(Context context) {
         super(context);
@@ -52,6 +54,25 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
             }
             retry = false;
         }
+    }
+
+    /**
+     * moves the player horizontally in the direction that the user touches the screen
+     *
+     * @param event touch event
+     * @return always returns true
+     */
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if (MotionEvent.ACTION_DOWN == action || MotionEvent.ACTION_MOVE == action) {
+            movePoint = (int) event.getX();
+            if (movePoint > player.getRect().right) {
+                player.playerSlide(5);
+            } else if (movePoint < player.getRect().left) {
+                player.playerSlide(-5);
+            }
+        }
+        return true;
     }
 
     /**
