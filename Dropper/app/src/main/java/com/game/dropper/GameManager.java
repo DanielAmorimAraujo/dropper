@@ -78,11 +78,19 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
             if (rightButton.buttonClick(movePointX, movePointY)) {
                 moveRight = true;
                 moveLeft = false;
+                rightButton.update();
             } else if (leftButton.buttonClick(movePointX, movePointY)) {
                 moveLeft = true;
                 moveRight = false;
+                leftButton.update();
             }
         } else if (MotionEvent.ACTION_UP == action) {
+            if (moveRight) {
+                rightButton.update();
+            }
+            if (moveLeft) {
+                leftButton.update();
+            }
             moveRight = false;
             moveLeft = false;
         }
