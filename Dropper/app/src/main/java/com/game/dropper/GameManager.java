@@ -2,15 +2,20 @@ package com.game.dropper;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
+    private Floors floors;
+
     public GameManager(Context context) {
         super(context);
         getHolder().addCallback(this);
+
+        floors = new Floors(30, 150, 200, Color.BLACK);
 
         setFocusable(true);
     }
@@ -29,13 +34,26 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        boolean retry = true;
+        while (true) {
+            try {
+                thread.setRunning(false);
+                thread.join();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            retry = false;
+        }
     }
 
     public void update() {
+        floors.update();
     }
 
     public void draw(Canvas canvas){
         super.draw(canvas);
+        canvas.drawColor(Color.WHITE);
+
+        floors.draw(canvas);
     }
 }
