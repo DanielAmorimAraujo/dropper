@@ -30,7 +30,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         getHolder().addCallback(this);
 
-        player = new Player(new Rect(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 30, 260), Color.RED);
+        player = new Player(new Rect(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 50, 280), Color.RED);
         floors = new Floors(30, 150, 200, Color.GRAY);
         rightButton = new Button(Constants.SCREEN_WIDTH / 6 * 5, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
         leftButton = new Button(Constants.SCREEN_WIDTH / 6, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
@@ -101,10 +101,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
      * updates the specific GameObjects
      */
     public void update() {
-        if (floors.playerCollide(player)) {
-            player.playerDrop(3);
-        } else {
-            player.playerDrop(-10);
+        for (int i = 0; i < 3; ++i) {
+            if (floors.playerCollide(player)) {
+                player.playerDrop(1);
+            } else {
+                player.playerDrop(-5);
+            }
         }
         if (moveRight) {
             player.playerSlide(5);
