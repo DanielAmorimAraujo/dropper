@@ -37,6 +37,10 @@ public class SingleFloor implements GameObject {
         rect3.bottom -= y;
 
     }
+    // it  can only intersect at the top, have it continue falling when it touches the size
+    public boolean playerCollideF(Player player) {
+        return Rect.intersects(rect1, player.getRect()) || Rect.intersects(rect2, player.getRect()) || Rect.intersects(rect3, player.getRect());
+    }
 
     @Override
     public void update() {

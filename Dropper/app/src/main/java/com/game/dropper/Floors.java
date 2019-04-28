@@ -42,6 +42,15 @@ public class Floors implements GameObject {
         }
     }
 
+    public boolean playerCollide(Player player) {
+        for (SingleFloor fl: floors) {
+            if (fl.playerCollideF(player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void update() {
         for (SingleFloor fl : floors) {
