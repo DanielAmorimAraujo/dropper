@@ -3,7 +3,6 @@ package com.game.dropper;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -24,6 +23,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private int movePointX;
     private int movePointY;
     private boolean moveRight;
+    private boolean rightBlock;
+    private boolean leftBlock;
     private boolean moveLeft;
     private boolean gameOver = false;
 
@@ -110,11 +111,13 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
                 } else {
                     player.playerDrop(-5);
                 }
-            }
-            if (moveRight) {
-                player.playerSlide(5);
-            } else if (moveLeft) {
-                player.playerSlide(-5);
+                rightBlock = floors.rightBlock(player);
+                leftBlock = floors.leftBlock(player);
+                if (moveRight && !rightBlock) {
+                    player.playerSlide(2);
+                } else if (moveLeft && !leftBlock) {
+                    player.playerSlide(-2);
+                }
             }
             floors.update();
         }

@@ -56,7 +56,25 @@ public class Floors implements GameObject {
      */
     public boolean playerCollide(Player player) {
         for (SingleFloor fl : floors) {
-            if (fl.playerCollideF(player)) {
+            if (fl.playerCollideF(player.getRect())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean rightBlock(Player player) {
+        for (SingleFloor fl: floors) {
+            if (fl.rightBlockF(player.getRect())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean leftBlock(Player player) {
+        for (SingleFloor fl: floors) {
+            if (fl.leftBlockF(player.getRect())) {
                 return true;
             }
         }

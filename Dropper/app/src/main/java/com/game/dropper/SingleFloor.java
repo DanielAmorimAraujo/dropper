@@ -56,8 +56,18 @@ public class SingleFloor implements GameObject {
      * @return if it intersects or not
      */
     // it  can only intersect at the top, have it continue falling when it touches the size
-    public boolean playerCollideF(Player player) {
-        return Rect.intersects(rect1, player.getRect()) || Rect.intersects(rect2, player.getRect()) || Rect.intersects(rect3, player.getRect());
+    public boolean playerCollideF(Rect player) {
+        return (Rect.intersects(rect1, player) || Rect.intersects(rect2, player) || Rect.intersects(rect3, player)) && !rightBlockF(player) && !leftBlockF(player);
+    }
+
+    public boolean rightBlockF(Rect player) {
+        return (player.top <= rect1.bottom) && (player.bottom >= rect1.top) && ((player.right == rect2.left) || (player.right == rect3.left) ||
+        (player.right == rect2.left + 1) || (player.right == rect3.left + 1));
+    }
+
+    public boolean leftBlockF(Rect player) {
+        return (player.top <= rect1.bottom) && (player.bottom >= rect1.top) && ((player.left == rect1.right) || (player.left == rect2.right) ||
+                (player.left == rect1.right - 1) || (player.left == rect2.right - 1));
     }
 
     @Override
