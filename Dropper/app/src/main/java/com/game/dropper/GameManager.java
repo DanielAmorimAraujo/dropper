@@ -17,15 +17,16 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
     private Player player;
-    private Floors floors;
+    private Map map;
+    //private Floors floors;
     private Button rightButton;
     private Button leftButton;
-    private CoinMap coins;
+    //private CoinMap coins;
     private int movePointX;
     private int movePointY;
     private boolean moveRight;
-    private boolean rightBlock;
-    private boolean leftBlock;
+    //private boolean rightBlock;
+    //private boolean leftBlock;
     private boolean moveLeft;
     private boolean gameOver = false;
 
@@ -34,10 +35,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
 
         player = new Player(new Rect(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 50, 280), Color.RED);
-        floors = new Floors(30, 150, 200, Color.GRAY);
+        map = new Map();
+        //floors = new Floors(30, 150, 200, Color.GRAY);
         rightButton = new Button(Constants.SCREEN_WIDTH / 6 * 5, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
         leftButton = new Button(Constants.SCREEN_WIDTH / 6, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
-        coins = new CoinMap();
+        //coins = new CoinMap();
         setFocusable(true);
     }
 
@@ -106,21 +108,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         gameOver = player.onScreen();
         if (!gameOver) {
-            for (int i = 0; i < 3; ++i) {
-                if (floors.playerCollide(player)) {
-                    player.playerDrop(1);
-                } else {
-                    player.playerDrop(-5);
-                }
-                rightBlock = floors.rightBlock(player);
-                leftBlock = floors.leftBlock(player);
-                if (moveRight && !rightBlock) {
-                    player.playerSlide(2);
-                } else if (moveLeft && !leftBlock) {
-                    player.playerSlide(-2);
-                }
-            }
-            floors.fullUpdate(coins);
+            map.update(player, moveRight, moveLeft);
         }
     }
 
@@ -133,10 +121,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         canvas.drawColor(Color.WHITE);
 
-        floors.draw(canvas);
+        map.draw(canvas);
         player.draw(canvas);
+        //floors.draw(canvas);
         rightButton.draw(canvas);
         leftButton.draw(canvas);
-        coins.draw(canvas);
+        //coins.draw(canvas);
     }
 }
