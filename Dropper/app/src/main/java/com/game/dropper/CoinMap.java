@@ -38,6 +38,11 @@ public class CoinMap implements GameObject {
     @Override
     public void update() {
         coins.add(0, new Coin((int) Math.floor(Math.random() * Constants.SCREEN_WIDTH), Constants.SCREEN_HEIGHT - 30, 20));
+        for (Coin c : coins) {
+            if (c.getHeight() <= 0) {
+                coins.remove(c);
+            }
+        }
     }
 
     @Override

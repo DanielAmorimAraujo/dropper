@@ -25,6 +25,9 @@ public class Coin implements GameObject {
         return player.right >= cx - radius && player.left <= cx + radius && player.top <= cy + radius && player.bottom >= cy - radius;
     }
 
+    public int getHeight() {
+        return cy + radius;
+    }
     @Override
     public void update() {
 
