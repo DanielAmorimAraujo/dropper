@@ -5,11 +5,11 @@ import android.graphics.Canvas;
 import java.util.ArrayList;
 
 /**
- * Floors class used to generate all the SingleFloors
+ * Floors class with declaration and relevant functions
  */
 public class Floors implements GameObject {
 
-    private ArrayList<SingleFloor> floors;
+    private ArrayList<SingleFloor> floors; // stores an array of Floors
     private int floorHeight;
     private int playerGap;
     private int color;
@@ -18,6 +18,14 @@ public class Floors implements GameObject {
     // private long startTime;
     // private long initTime
 
+    /**
+     * Floors function used to generate a Floors
+     *
+     * @param floorHeight the height of a SingleFloor
+     * @param playerGap   the gap in the SingleFloor
+     * @param floorGap    gap between adjacent SingleFloors
+     * @param color       color of the Floors
+     */
     public Floors(int floorHeight, int playerGap, int floorGap, int color) {
         this.floorHeight = floorHeight;
         this.playerGap = playerGap;
@@ -49,10 +57,10 @@ public class Floors implements GameObject {
     }
 
     /**
-     * determines if the player intersects with any of the floors
+     * determines if player is on top of a SingleFloor
      *
      * @param player the current player
-     * @return if the player intersects
+     * @return true if a player is on top, false otherwise
      */
     public boolean playerCollide(Player player) {
         for (SingleFloor fl : floors) {
@@ -63,6 +71,12 @@ public class Floors implements GameObject {
         return false;
     }
 
+    /**
+     * determines if player is being blocked on the right by a SingleFloor
+     *
+     * @param player current player
+     * @return true if player is being blocked, false otherwise
+     */
     public boolean rightBlock(Player player) {
         for (SingleFloor fl : floors) {
             if (fl.rightBlockF(player.getRect())) {
@@ -72,6 +86,12 @@ public class Floors implements GameObject {
         return false;
     }
 
+    /**
+     * determines if player is being blocked on the left by a SingleFloor
+     *
+     * @param player current player
+     * @return true if player is being blocked, false otherwise
+     */
     public boolean leftBlock(Player player) {
         for (SingleFloor fl : floors) {
             if (fl.leftBlockF(player.getRect())) {
@@ -82,22 +102,21 @@ public class Floors implements GameObject {
     }
 
     /**
-     * moves the floors down, adding additional ones if necessary
+     * moves the floors up, adding additional ones if necessary
+     * generates coins and updates them
      */
     public void fullUpdate(CoinMap coins) {
         for (SingleFloor fl : floors) {
-            fl.floorMove(3);
+            fl.floorMove(3); // moves all the floors up
         }
-        if (coins.getSize() != 0) {
-            coins.moveCoins();
-        }
-
+        coins.update(); // moves all coins up
         if (floors.get(floors.size() - 1).getHeight() < 0) {
-            floors.remove(floors.size() - 1);
+            floors.remove(floors.size() - 1); // removes any floors that are no longer on the screen
         }
-        if (floors.get(0).getHeight() < Constants.SCREEN_HEIGHT - floorGap) {
-            int gaps = (int) Math.floor(Math.random() * 2) + 1;
+        if (floors.get(0).getHeight() < Constants.SCREEN_HEIGHT - floorGap) { // adds more floors if necessary
+            int gaps = (int) Math.floor(Math.random() * 2) + 1; // randomly generates how many gaps the new SingeFloor will have
 
+            // adds new SingleFloor with random dimensions
             if (gaps == 1) {
                 int length1 = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
                 int length2 = Constants.SCREEN_WIDTH - length1 - playerGap;
@@ -110,17 +129,19 @@ public class Floors implements GameObject {
                 floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT, floorHeight, playerGap, color));
             }
 
-            int coinChance = (int) Math.floor(Math.random() * 3);
+            // adds coins randomly
+            int coinChance = (int) Math.floor(Math.random() * 2);
             if (coinChance == 0) {
-                coins.update();
+                coins.addCoins();
             }
         }
     }
 
+    /**
+     * update function for Floors
+     */
     @Override
-    public void update() {
-
-    }
+    public void update() {}
 
     /**
      * draws all the SingleFloors onto the canvas

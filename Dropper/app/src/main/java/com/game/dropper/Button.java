@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * Button classed used to generate two buttons
+ * Button class with declaration and relevant functions
  */
 public class Button implements GameObject {
 
@@ -14,6 +14,14 @@ public class Button implements GameObject {
     private int radius;
     int color;
 
+    /**
+     * Button function used to generate a Button
+     *
+     * @param cx     x value of button centre
+     * @param cy     y value of button centre
+     * @param radius radius of button
+     * @param color  color of button
+     */
     public Button(int cx, int cy, int radius, int color) {
         this.cx = cx;
         this.cy = cy;
@@ -37,6 +45,7 @@ public class Button implements GameObject {
 
     /**
      * determines if the point is on the button
+     *
      * @param mX user input x value
      * @param mY user input y value
      * @return boolean if the point intersects
@@ -45,6 +54,10 @@ public class Button implements GameObject {
         return Math.pow(mX - cx, 2) + Math.pow(mY - cy, 2) <= Math.pow(radius, 2);
     }
 
+    /**
+     * update function for Button
+     * changes color from BLUE to GREEN or GREEN to BLUE (green is active, blue is unactive)
+     */
     @Override
     public void update() {
         if (color == Color.BLUE) {

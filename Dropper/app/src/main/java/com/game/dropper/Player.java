@@ -5,16 +5,32 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Player class used to generate the player, in the form of a Rect
+ * Player class with declaration and relevant functions
  */
 public class Player implements GameObject {
 
     private Rect player;
     int color;
 
-    public Player(Rect player, int color) {
-        this.player = player;
+    /**
+     * Player function used to generate the player, in the form of a Rect
+     *
+     * @param left   left side of player rectangle
+     * @param top    top side of player rectangle
+     * @param right  right side of player rectangle
+     * @param bottom bottom side of player rectangle
+     * @param color  player's color
+     */
+    public Player(int left, int top, int right, int bottom, int color) {
+        player = new Rect(left, top, right, bottom);
         this.color = color;
+    }
+
+    /**
+     * @return returns the player's rect
+     */
+    public Rect getRect() {
+        return player;
     }
 
     /**
@@ -39,18 +55,6 @@ public class Player implements GameObject {
     }
 
     /**
-     * @return returns the player's rect
-     */
-    public Rect getRect() {
-        return player;
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    /**
      * determines if the player is on the screen
      *
      * @return true if player is on the screen
@@ -58,6 +62,12 @@ public class Player implements GameObject {
     public boolean onScreen() {
         return player.top > Constants.SCREEN_HEIGHT || player.right < 0 || player.bottom < 0 || player.left > Constants.SCREEN_WIDTH;
     }
+
+    /**
+     * update function for Player
+     */
+    @Override
+    public void update() {}
 
     /**
      * draws the player onto the canvas
