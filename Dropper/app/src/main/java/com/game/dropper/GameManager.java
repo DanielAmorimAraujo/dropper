@@ -3,7 +3,7 @@ package com.game.dropper;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -16,30 +16,29 @@ import android.view.SurfaceView;
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
-    private Player player;
-    private Map map;
-    //private Floors floors;
-    private Button rightButton;
-    private Button leftButton;
-    //private CoinMap coins;
-    private int movePointX;
-    private int movePointY;
-    private boolean moveRight;
-    //private boolean rightBlock;
-    //private boolean leftBlock;
-    private boolean moveLeft;
-    private boolean gameOver = false;
+    private Player player; // stores current player
+    private Map map; // stores the game map
+    private Button rightButton; // stores right button
+    private Button leftButton; // stores left button
+    private int movePointX; // stores x value of user click
+    private int movePointY; // stores y value of user click
+    private boolean moveRight; // stores if user is trying to move to the right
+    private boolean moveLeft; // stores if user is trying to move to the left
+    private boolean gameOver = false; // true of game is over
 
+    /**
+     * starts the game and declares important game components
+     *
+     * @param context
+     */
     public GameManager(Context context) {
         super(context);
         getHolder().addCallback(this);
 
-        player = new Player(new Rect(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 50, 280), Color.RED);
+        player = new Player(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 50, 280, Color.RED);
         map = new Map();
-        //floors = new Floors(30, 150, 200, Color.GRAY);
         rightButton = new Button(Constants.SCREEN_WIDTH / 6 * 5, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
         leftButton = new Button(Constants.SCREEN_WIDTH / 6, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
-        //coins = new CoinMap();
         setFocusable(true);
     }
 
@@ -52,8 +51,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    }
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -70,26 +68,26 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * moves the player horizontally in the direction that the user touches the screen
+     * reads user touch event and determines what direction the user is trying to move in
      *
      * @param event touch event
-     * @return always returns true
+     * @return always returns true (assume touch event was successful)
      */
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (MotionEvent.ACTION_DOWN == action) {
             movePointX = (int) event.getX();
             movePointY = (int) event.getY();
-            if (rightButton.buttonClick(movePointX, movePointY)) {
+            if (rightButton.buttonClick(movePointX, movePointY)) { // determines if clicking on right button
                 moveRight = true;
                 moveLeft = false;
                 rightButton.update();
-            } else if (leftButton.buttonClick(movePointX, movePointY)) {
+            } else if (leftButton.buttonClick(movePointX, movePointY)) { // determines if clicking on left button
                 moveLeft = true;
                 moveRight = false;
                 leftButton.update();
             }
-        } else if (MotionEvent.ACTION_UP == action) {
+        } else if (MotionEvent.ACTION_UP == action) { // once player stops clicking (returns buttons to default)
             if (moveRight) {
                 rightButton.update();
             }
@@ -103,13 +101,20 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * updates the specific GameObjects
+     * updates the specific GameObjects if the game is not over
      */
     public void update() {
         gameOver = player.onScreen();
         if (!gameOver) {
             map.update(player, moveRight, moveLeft);
         }
+    }
+
+    public void gameOver(Canvas canvas) {
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setTextSize(100);
+        canvas.drawText("Game Over", Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 2, paint);
     }
 
     /**
@@ -123,9 +128,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
         map.draw(canvas);
         player.draw(canvas);
-        //floors.draw(canvas);
         rightButton.draw(canvas);
         leftButton.draw(canvas);
-        //coins.draw(canvas);
+
+        if (gameOver) {
+            gameOver(canvas);
+        }
     }
 }
