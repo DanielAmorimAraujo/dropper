@@ -76,16 +76,20 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (MotionEvent.ACTION_DOWN == action) {
-            movePointX = (int) event.getX();
-            movePointY = (int) event.getY();
-            if (rightButton.buttonClick(movePointX, movePointY)) { // determines if clicking on right button
-                moveRight = true;
-                moveLeft = false;
-                rightButton.update();
-            } else if (leftButton.buttonClick(movePointX, movePointY)) { // determines if clicking on left button
-                moveLeft = true;
-                moveRight = false;
-                leftButton.update();
+            if (!gameOver) {
+                movePointX = (int) event.getX();
+                movePointY = (int) event.getY();
+                if (rightButton.buttonClick(movePointX, movePointY)) { // determines if clicking on right button
+                    moveRight = true;
+                    moveLeft = false;
+                    rightButton.update();
+                } else if (leftButton.buttonClick(movePointX, movePointY)) { // determines if clicking on left button
+                    moveLeft = true;
+                    moveRight = false;
+                    leftButton.update();
+                }
+            } else {
+                resetGame();
             }
         } else if (MotionEvent.ACTION_UP == action) { // once player stops clicking (returns buttons to default)
             if (moveRight) {
@@ -115,6 +119,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(Color.RED);
         paint.setTextSize(100);
         canvas.drawText("Game Over", Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 2, paint);
+    }
+
+    public void resetGame() {
+        player = new Player(Constants.SCREEN_WIDTH / 2 - 30, 200, Constants.SCREEN_WIDTH / 2 + 50, 280, Color.RED);
+        map = new Map();
+        gameOver = false;
     }
 
     /**

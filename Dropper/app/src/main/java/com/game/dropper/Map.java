@@ -9,8 +9,8 @@ import android.graphics.Paint;
  */
 public class Map {
 
-    private Floors floors;
-    private CoinMap coins;
+    public Floors floors;
+    public CoinMap coins;
     private boolean rightBlock;
     private boolean leftBlock;
     public int score = 0;
