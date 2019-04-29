@@ -20,6 +20,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private Floors floors;
     private Button rightButton;
     private Button leftButton;
+    private CoinMap coins;
     private int movePointX;
     private int movePointY;
     private boolean moveRight;
@@ -36,7 +37,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         floors = new Floors(30, 150, 200, Color.GRAY);
         rightButton = new Button(Constants.SCREEN_WIDTH / 6 * 5, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
         leftButton = new Button(Constants.SCREEN_WIDTH / 6, Constants.SCREEN_HEIGHT - Constants.SCREEN_HEIGHT / 10, Constants.SCREEN_WIDTH / 9, Color.BLUE);
-
+        coins = new CoinMap();
         setFocusable(true);
     }
 
@@ -119,7 +120,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
                     player.playerSlide(-2);
                 }
             }
-            floors.update();
+            floors.fullUpdate(coins);
         }
     }
 
@@ -136,5 +137,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
         player.draw(canvas);
         rightButton.draw(canvas);
         leftButton.draw(canvas);
+        coins.draw(canvas);
     }
 }

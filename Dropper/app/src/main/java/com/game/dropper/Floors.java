@@ -64,7 +64,7 @@ public class Floors implements GameObject {
     }
 
     public boolean rightBlock(Player player) {
-        for (SingleFloor fl: floors) {
+        for (SingleFloor fl : floors) {
             if (fl.rightBlockF(player.getRect())) {
                 return true;
             }
@@ -73,7 +73,7 @@ public class Floors implements GameObject {
     }
 
     public boolean leftBlock(Player player) {
-        for (SingleFloor fl: floors) {
+        for (SingleFloor fl : floors) {
             if (fl.leftBlockF(player.getRect())) {
                 return true;
             }
@@ -84,11 +84,14 @@ public class Floors implements GameObject {
     /**
      * moves the floors down, adding additional ones if necessary
      */
-    @Override
-    public void update() {
+    public void fullUpdate(CoinMap coins) {
         for (SingleFloor fl : floors) {
             fl.floorMove(3);
         }
+        if (coins.getSize() != 0) {
+            coins.moveCoins();
+        }
+
         if (floors.get(floors.size() - 1).getHeight() < 0) {
             floors.remove(floors.size() - 1);
         }
@@ -99,14 +102,24 @@ public class Floors implements GameObject {
                 int length1 = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
                 int length2 = Constants.SCREEN_WIDTH - length1 - playerGap;
 
-                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT, floorHeight, playerGap, color));
+                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT - 10, floorHeight, playerGap, color));
             } else {
                 int length1 = (int) (Math.random() * (Constants.SCREEN_WIDTH / 2 - playerGap));
                 int length2 = (int) (Math.random() * (Constants.SCREEN_WIDTH - length1 - playerGap));
 
-                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT, floorHeight, playerGap, color));
+                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT - 10, floorHeight, playerGap, color));
+            }
+
+            int coinChance = (int) Math.floor(Math.random() * 3);
+            if (coinChance == 0) {
+                coins.update();
             }
         }
+    }
+
+    @Override
+    public void update() {
+
     }
 
     /**

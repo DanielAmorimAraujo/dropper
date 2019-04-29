@@ -62,7 +62,7 @@ public class SingleFloor implements GameObject {
 
     public boolean rightBlockF(Rect player) {
         return (player.top <= rect1.bottom) && (player.bottom >= rect1.top) && ((player.right == rect2.left) || (player.right == rect3.left) ||
-        (player.right == rect2.left + 1) || (player.right == rect3.left + 1));
+                (player.right == rect2.left + 1) || (player.right == rect3.left + 1));
     }
 
     public boolean leftBlockF(Rect player) {

@@ -1,5 +1,7 @@
 package com.game.dropper;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -63,6 +65,7 @@ public class Button implements GameObject {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(color);
+        paint.setAlpha(100);
         canvas.drawCircle(cx, cy, radius, paint);
     }
 }
