@@ -51,6 +51,15 @@ public class Player implements GameObject {
     }
 
     /**
+     * determines if the player is on the screen
+     *
+     * @return true if player is on the screen
+     */
+    public boolean onScreen() {
+        return player.top > Constants.SCREEN_HEIGHT || player.right < 0 || player.bottom < 0 || player.left > Constants.SCREEN_WIDTH;
+    }
+
+    /**
      * draws the player onto the canvas
      *
      * @param canvas in which the game is drawn on

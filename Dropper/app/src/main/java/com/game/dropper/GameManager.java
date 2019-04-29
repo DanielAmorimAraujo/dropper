@@ -25,6 +25,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private int movePointY;
     private boolean moveRight;
     private boolean moveLeft;
+    private boolean gameOver = false;
 
     public GameManager(Context context) {
         super(context);
@@ -101,19 +102,22 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
      * updates the specific GameObjects
      */
     public void update() {
-        for (int i = 0; i < 3; ++i) {
-            if (floors.playerCollide(player)) {
-                player.playerDrop(1);
-            } else {
-                player.playerDrop(-5);
+        gameOver = player.onScreen();
+        if (!gameOver) {
+            for (int i = 0; i < 3; ++i) {
+                if (floors.playerCollide(player)) {
+                    player.playerDrop(1);
+                } else {
+                    player.playerDrop(-5);
+                }
             }
+            if (moveRight) {
+                player.playerSlide(5);
+            } else if (moveLeft) {
+                player.playerSlide(-5);
+            }
+            floors.update();
         }
-        if (moveRight) {
-            player.playerSlide(5);
-        } else if (moveLeft) {
-            player.playerSlide(-5);
-        }
-        floors.update();
     }
 
     /**
