@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import java.util.ArrayList;
 
-public class CoinMap implements GameObject{
+public class CoinMap implements GameObject {
 
     private ArrayList<Coin> coins;
 
@@ -22,9 +22,22 @@ public class CoinMap implements GameObject{
         }
     }
 
+    public int touchCoin(Player player) {
+        for (int i = 0; i < coins.size(); ++i) {
+            if (coins.get(i).touchCoin(player.getRect())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void remove(int index) {
+        coins.remove(index);
+    }
+
     @Override
     public void update() {
-        coins.add(0, new Coin((int) Math.floor(Math.random() * Constants.SCREEN_WIDTH), Constants.SCREEN_HEIGHT - 5, 20));
+        coins.add(0, new Coin((int) Math.floor(Math.random() * Constants.SCREEN_WIDTH), Constants.SCREEN_HEIGHT - 30, 20));
     }
 
     @Override

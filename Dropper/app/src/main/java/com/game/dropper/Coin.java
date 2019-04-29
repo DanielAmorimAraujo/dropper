@@ -3,6 +3,7 @@ package com.game.dropper;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Coin implements GameObject {
 
@@ -18,6 +19,10 @@ public class Coin implements GameObject {
 
     public void coinMove(int y) {
         cy -= y;
+    }
+
+    public boolean touchCoin(Rect player) {
+        return player.right >= cx - radius && player.left <= cx + radius && player.top <= cy + radius && player.bottom >= cy - radius;
     }
 
     @Override

@@ -102,12 +102,12 @@ public class Floors implements GameObject {
                 int length1 = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
                 int length2 = Constants.SCREEN_WIDTH - length1 - playerGap;
 
-                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT - 10, floorHeight, playerGap, color));
+                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT, floorHeight, playerGap, color));
             } else {
                 int length1 = (int) (Math.random() * (Constants.SCREEN_WIDTH / 2 - playerGap));
                 int length2 = (int) (Math.random() * (Constants.SCREEN_WIDTH - length1 - playerGap));
 
-                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT - 10, floorHeight, playerGap, color));
+                floors.add(0, new SingleFloor(length1, length2, Constants.SCREEN_HEIGHT, floorHeight, playerGap, color));
             }
 
             int coinChance = (int) Math.floor(Math.random() * 3);

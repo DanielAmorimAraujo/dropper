@@ -2,6 +2,7 @@ package com.game.dropper;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 
 public class Map {
 
@@ -9,6 +10,7 @@ public class Map {
     private CoinMap coins;
     private boolean rightBlock;
     private boolean leftBlock;
+    private int score = 0;
 
     public Map() {
         floors = new Floors(30, 150, 200, Color.GRAY);
@@ -22,6 +24,11 @@ public class Map {
                 player.playerDrop(1);
             } else {
                 player.playerDrop(-5);
+            }
+            int index = coins.touchCoin(player);
+            if (index != -1) {
+                coins.remove(index);
+                ++score;
             }
             rightBlock = floors.rightBlock(player);
             leftBlock = floors.leftBlock(player);
@@ -37,5 +44,12 @@ public class Map {
     public void draw(Canvas canvas) {
         floors.draw(canvas);
         coins.draw(canvas);
+
+
+        Paint paint = new Paint();
+
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(50);
+        canvas.drawText("Score: " + score, 10, 50, paint);
     }
 }
