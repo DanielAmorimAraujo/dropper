@@ -1,9 +1,11 @@
 package com.game.dropper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,6 +27,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     public boolean moveRight; // stores if user is trying to move to the right
     public boolean moveLeft; // stores if user is trying to move to the left
     private boolean gameOver = false; // true of game is over
+    public Rect playRect;
+    public Rect quitRect;
+
+    boolean retry = true;
 
     /**
      * starts the game and declares important game components
@@ -51,12 +57,13 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        while (true) {
+
+        while (retry) {
             try {
                 thread.setRunning(false);
                 thread.join();
@@ -76,9 +83,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (MotionEvent.ACTION_DOWN == action) {
+            movePointX = (int) event.getX();
+            movePointY = (int) event.getY();
             if (!gameOver) {
-                movePointX = (int) event.getX();
-                movePointY = (int) event.getY();
                 if (rightButton.buttonClick(movePointX, movePointY)) { // determines if clicking on right button
                     moveRight = true;
                     moveLeft = false;
@@ -89,7 +96,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
                     leftButton.update();
                 }
             } else {
-                resetGame();
+                if (playRect.contains(movePointX, movePointY)) {
+                    resetGame();
+                } else if (quitRect.contains(movePointX, movePointY)) {
+                    MainThread.running = false;
+                }
             }
         } else if (MotionEvent.ACTION_UP == action) { // once player stops clicking (returns buttons to default)
             if (moveRight) {
@@ -115,10 +126,31 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void gameOver(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setTextSize(100);
-        canvas.drawText("Game Over", Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 2, paint);
+        Paint textPaint = new Paint();
+        textPaint.setColor(Color.RED);
+        textPaint.setTextSize(100);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+
+        Paint rectPaint = new Paint();
+        rectPaint.setColor(Color.TRANSPARENT);
+
+        String strOver = "Game Over";
+        String strPlay = "Play Again";
+        String strQuit = "Quit";
+
+        int lengthPlay = (int) textPaint.measureText(strPlay) / 2;
+        int lengthQuit = (int) textPaint.measureText(strQuit) / 2;
+        int textHeight = (int) textPaint.getTextSize();
+
+        playRect = new Rect(Constants.SCREEN_WIDTH / 2 - lengthPlay, Constants.SCREEN_HEIGHT / 3 * 2 - textHeight, Constants.SCREEN_WIDTH / 2 + lengthPlay, Constants.SCREEN_HEIGHT / 3 * 2);
+        quitRect = new Rect(Constants.SCREEN_WIDTH / 2 - lengthQuit, Constants.SCREEN_HEIGHT / 4 * 3 - textHeight, Constants.SCREEN_WIDTH / 2 + lengthQuit, Constants.SCREEN_HEIGHT / 4 * 3);
+
+        canvas.drawRect(playRect, rectPaint);
+        canvas.drawRect(quitRect, rectPaint);
+
+        canvas.drawText(strOver, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, textPaint);
+        canvas.drawText(strPlay, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3 * 2, textPaint);
+        canvas.drawText(strQuit, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 4 * 3, textPaint);
     }
 
     public void resetGame() {
