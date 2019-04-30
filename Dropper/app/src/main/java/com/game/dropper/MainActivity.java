@@ -1,10 +1,14 @@
 package com.game.dropper;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -25,7 +29,28 @@ public class MainActivity extends Activity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
 
+        setContentView(R.layout.activity_main);
         // changes view to GameManager
+        //setContentView(new GameManager(this));
+
+        configureStartGameButton(this);
+    }
+/*
+    public boolean onTouchEvent(MotionEvent event) {
         setContentView(new GameManager(this));
+        return true;
+    }
+    */
+
+    private void configureStartGameButton(final Context context) {
+
+        android.widget.Button startGameBtn = findViewById(R.id.startGameBtn);
+        startGameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(MainActivity.this, GameManager.class));
+                setContentView(new GameManager(context));
+            }
+        });
     }
 }
