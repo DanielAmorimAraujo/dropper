@@ -35,20 +35,19 @@ public class MainActivity extends Activity {
 
         configureStartGameButton(this);
     }
-/*
-    public boolean onTouchEvent(MotionEvent event) {
-        setContentView(new GameManager(this));
-        return true;
-    }
-    */
 
+    /**
+     * declares startGameBtn and has it switch to GameManager when clicked
+     *
+     * @param context
+     */
     private void configureStartGameButton(final Context context) {
 
         android.widget.Button startGameBtn = findViewById(R.id.startGameBtn);
         startGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(MainActivity.this, GameManager.class));
+                //startActivity(new Intent(MainActivity.this, Settings.class));
                 setContentView(new GameManager(context));
             }
         });

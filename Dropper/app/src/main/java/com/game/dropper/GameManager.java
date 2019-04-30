@@ -16,14 +16,14 @@ import android.view.SurfaceView;
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
-    private Player player; // stores current player
+    public Player player; // stores current player
     private Map map; // stores the game map
     private Button rightButton; // stores right button
     private Button leftButton; // stores left button
     private int movePointX; // stores x value of user click
     private int movePointY; // stores y value of user click
-    private boolean moveRight; // stores if user is trying to move to the right
-    private boolean moveLeft; // stores if user is trying to move to the left
+    public boolean moveRight; // stores if user is trying to move to the right
+    public boolean moveLeft; // stores if user is trying to move to the left
     private boolean gameOver = false; // true of game is over
 
     /**

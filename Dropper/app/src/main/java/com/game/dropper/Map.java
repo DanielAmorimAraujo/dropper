@@ -11,7 +11,7 @@ public class Map {
 
     public Floors floors;
     public CoinMap coins;
-    private boolean rightBlock;
+    public boolean rightBlock;
     private boolean leftBlock;
     public int score = 0;
 
