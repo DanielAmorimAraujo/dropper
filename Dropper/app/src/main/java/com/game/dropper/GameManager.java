@@ -1,7 +1,6 @@
 package com.game.dropper;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,7 +29,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
     public Rect playRect;
     public Rect quitRect;
 
-    boolean retry = true;
+    public static boolean retry = true;
 
     /**
      * starts the game and declares important game components
@@ -99,7 +98,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
                 if (playRect.contains(movePointX, movePointY)) {
                     resetGame();
                 } else if (quitRect.contains(movePointX, movePointY)) {
-                    MainThread.running = false;
+
                 }
             }
         } else if (MotionEvent.ACTION_UP == action) { // once player stops clicking (returns buttons to default)

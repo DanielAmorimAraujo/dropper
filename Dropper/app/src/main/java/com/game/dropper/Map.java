@@ -45,9 +45,9 @@ public class Map {
             rightBlock = floors.rightBlock(player); // determines if the player is blocked on the right
             leftBlock = floors.leftBlock(player); // determines if the player is blocked on the left
             if (moveRight && !rightBlock) {
-                player.playerSlide(2); // moves player to the right if possible
+                player.playerSlide(Constants.PLAYER_MOVE); // moves player to the right if possible
             } else if (moveLeft && !leftBlock) {
-                player.playerSlide(-2); // moves player to the left if possible
+                player.playerSlide(- Constants.PLAYER_MOVE); // moves player to the left if possible
             }
         }
         floors.fullUpdate(coins); // updates floors
