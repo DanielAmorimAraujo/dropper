@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         // changes view to GameManager
         //setContentView(new GameManager(this));
 
-        configureStartGameButton(this);
+
     }
 
     /**
@@ -38,16 +38,8 @@ public class MainActivity extends Activity {
      *
      * @param context
      */
-    private void configureStartGameButton(final Context context) {
-
-        android.widget.Button startGameBtn = findViewById(R.id.startGameBtn);
-        startGameBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //startActivity(new Intent(MainActivity.this, Settings.class));
-                setContentView(new GameManager(context));
-            }
-        });
+    public void onStartGame(View view) {
+        setContentView(new GameManager(this));
     }
 
     @Override
