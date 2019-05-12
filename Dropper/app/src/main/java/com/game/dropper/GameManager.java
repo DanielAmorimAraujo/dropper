@@ -98,7 +98,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
                 if (playRect.contains(movePointX, movePointY)) {
                     resetGame();
                 } else if (quitRect.contains(movePointX, movePointY)) {
-
                 }
             }
         } else if (MotionEvent.ACTION_UP == action) { // once player stops clicking (returns buttons to default)
@@ -182,7 +181,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawText(strOver, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, textPaint);
         canvas.drawText(strPlay, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 3 * 2, textPaint);
-        canvas.drawText(strQuit, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 4 * 3, textPaint);
+        //canvas.drawText(strQuit, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 4 * 3, textPaint);
     }
 
     public void resetGame() {
